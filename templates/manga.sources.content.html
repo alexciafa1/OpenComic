@@ -1,0 +1,42 @@
+{{#with mangaSources}}
+{{#if repositoriesView}}
+	<p>{{t.repositoryHint}}</p>
+	<form class="ms-repository-form ms-toolbar">
+		<label class="ms-grow">{{t.repositoryUrl}}<input type="url" name="url" required placeholder="https://…/index.min.json" autocomplete="off"></label>
+		<button class="simple-button filled-tonal" type="submit">{{t.add}}</button>
+	</form>
+	<p class="ms-muted">{{t.trust}}</p><p class="ms-muted">{{t.repoNotice}}</p>
+	{{#each repositories}}
+	<div class="ms-row"><div class="ms-grow"><strong>{{name}}</strong><p class="ms-muted">{{indexUrl}}</p></div><button class="simple-button" data-remove-repository="{{@index}}">{{../t.remove}}</button></div>
+	{{else}}<p class="ms-empty">{{t.emptyRepositories}}</p>{{/each}}
+	<p class="ms-muted">{{t.removeNote}}</p>
+{{/if}}
+{{#if listView}}
+	<div class="ms-toolbar"><label class="ms-grow">{{t.filter}}<input type="search" class="ms-filter" value="{{filter}}" autocomplete="off"></label><label>{{t.allLanguages}}<select class="ms-language"><option value="">{{t.allLanguages}}</option>{{#each languages}}<option value="{{this}}"{{#compare this '==' ../lang}} selected{{/compare}}>{{this}}</option>{{/each}}</select></label><button class="simple-button filled-tonal" data-action="refresh">{{t.refresh}}</button></div>
+	{{#if extensionsView}}<p class="ms-muted">{{t.trust}}</p>{{/if}}
+	<div class="ms-list">
+	{{#each items}}
+	<div class="ms-row" data-name="{{name}} {{lang}}" data-lang="{{lang}}"><span class="material-icon ms-list-icon">{{#if ../extensionsView}}extension{{else}}public{{/if}}</span><div class="ms-grow"><strong>{{name}}</strong><p class="ms-muted">{{lang}}{{#if versionName}} · {{versionName}}{{/if}}</p></div>
+		{{#if ../extensionsView}}
+			{{#if isInstalled}}{{#if hasUpdate}}<button class="simple-button filled-tonal" data-update="{{@index}}">{{../t.update}}</button>{{/if}}<button class="simple-button" data-uninstall="{{@index}}">{{../t.uninstall}}</button>
+			{{else}}<button class="simple-button filled-tonal" data-install="{{@index}}">{{../t.install}}</button>{{/if}}
+		{{else}}<button class="simple-button filled-tonal" data-source="{{@index}}">{{../t.browse}}</button>{{/if}}
+	</div>
+	{{else}}<p class="ms-empty">{{#if extensionsView}}{{t.emptyExtensions}}{{else}}{{t.emptySources}}{{/if}}</p>{{/each}}
+	<p class="ms-no-matches ms-empty" hidden>{{t.emptyResults}}</p>
+	</div>
+{{/if}}
+{{#if browseView}}
+	<div class="ms-toolbar"><button class="simple-button" data-action="back">← {{t.back}}</button><h2 class="title-large">{{source.name}} <span class="ms-muted">{{source.lang}}</span></h2></div>
+	<form class="ms-search-form ms-toolbar"><label class="ms-grow">{{t.search}}<input type="search" name="query" value="{{query}}" autocomplete="off"></label><button class="simple-button filled-tonal" type="submit">{{t.search}}</button><select class="ms-sort" aria-label="{{t.popular}}"><option value="POPULAR"{{#compare type '==' 'POPULAR'}} selected{{/compare}}>{{t.popular}}</option>{{#if source.supportsLatest}}<option value="LATEST"{{#compare type '==' 'LATEST'}} selected{{/compare}}>{{t.latest}}</option>{{/if}}</select></form>
+	<div class="ms-grid">{{#each mangas}}<button class="ms-manga gamepad-item" data-manga="{{@index}}"><div class="ms-cover"><span class="material-icon">menu_book</span>{{#if thumbnailUrl}}<img data-cover="{{thumbnailUrl}}" alt="" loading="lazy">{{/if}}</div><strong>{{title}}</strong></button>{{else}}<p class="ms-empty">{{t.emptyResults}}</p>{{/each}}</div>
+	<div class="ms-toolbar ms-pagination"><button class="simple-button" data-action="previous"{{#unless hasPrevious}} disabled{{/unless}}>{{t.previous}}</button><span>{{t.page}} {{page}}</span><button class="simple-button filled-tonal" data-action="next"{{#unless hasNextPage}} disabled{{/unless}}>{{t.next}}</button></div>
+{{/if}}
+{{#if detailView}}
+	<button class="simple-button" data-action="back">← {{t.back}}</button>
+	<div class="ms-detail"><div class="ms-cover"><span class="material-icon">menu_book</span>{{#if manga.thumbnailUrl}}<img data-cover="{{manga.thumbnailUrl}}" alt="">{{/if}}</div><div><h2 class="headline-medium">{{manga.title}}</h2><p>{{manga.author}}</p><p class="ms-description">{{manga.description}}</p></div></div>
+	<h2 class="headline-small">{{t.chapters}} <span class="ms-muted">({{chapters.length}})</span></h2><p class="ms-muted">{{t.chapterHint}}</p>
+	<div class="ms-download" hidden><p>{{t.preparing}} <span class="ms-progress-text"></span></p><progress max="100" value="0"></progress><button class="simple-button" data-action="cancel">{{t.cancel}}</button></div>
+	{{#each chapters}}<div class="ms-row"><div class="ms-grow">{{name}}</div><button class="simple-button filled-tonal" data-chapter="{{@index}}">{{../t.read}}</button></div>{{else}}<p class="ms-empty">{{t.noChapters}}</p>{{/each}}
+{{/if}}
+{{/with}}

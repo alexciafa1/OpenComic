@@ -22,6 +22,11 @@
 		{{language.global.catalogs}}
 	</div>
 
+	<div class="menu-item menu-item-manga-sources body-medium gamepad-item{{#compare isFrom '==' 'manga-sources'}} active{{/compare}}" onclick="dom.loadMangaSourcesPage();" hover-text="{{language.mangaSources.title}}">
+		<div class="icon-24 material-icon">travel_explore</div>
+		{{language.mangaSources.title}}
+	</div>
+
 	{{#each opdsCatalogsLeft}}
 		{{#if showOnLeft}}
 		<div class="menu-item menu-item-{{id}} body-medium gamepad-item{{#compare @root.isFrom '==' id}} active{{/compare}}" onclick="dom.labels.opds('{{chain 'escapeBackSlash' 'escapeQuotesSimples' url}}', {{key}}, '{{chain 'escapeBackSlash' 'escapeQuotesSimples' title}}');" onmousedown="dom.labels.middleClick(event, 'opds', {url: '{{chain 'escapeBackSlash' 'escapeQuotesSimples' url}}', index: {{key}}, title: '{{chain 'escapeBackSlash' 'escapeQuotesSimples' title}}'})" hover-text="{{title}}">

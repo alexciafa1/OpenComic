@@ -286,6 +286,8 @@ if(folderPortable.check())
 	}
 }
 
+require('./manga-sources/ipc.js')({app, ipcMain}, storagePath);
+
 const configInitFile = p.join(storagePath, 'configInit.json');
 const configInit = fs.existsSync(configInitFile) ? JSON.parse(fs.readFileSync(configInitFile, 'utf8')) : {};
 

@@ -72,6 +72,10 @@ async function goTo(goTo = false, animation = true)
 				case 'settings':
 					dom.loadSettingsPage(animation);
 					break;
+
+				case 'manga-sources':
+					dom.loadMangaSourcesPage(animation);
+					break;
 			}
 
 			return;
@@ -125,6 +129,13 @@ function goBack()
 
 	if(goBack.root)
 	{
+		if(goBack.page === 'manga-sources')
+		{
+			forwardHistory.push(prev);
+			dom.loadMangaSourcesPage(true);
+			return;
+		}
+
 		if(goBack.indexLabel && !goBack.recentlyOpened)
 			dom.setIndexLabel(goBack.indexLabel);
 

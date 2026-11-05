@@ -26,7 +26,7 @@
 	"scripts": {
 		"start": "npm run prebuild-start && electron .dist/main.js --no-sandbox",
 		"watch": "tsc --watch",
-		"test": "npm run eslint && npm run test-unit && node .dist/test/build.mjs",
+		"test": "npm run eslint && npm run test-unit && npm run test-sources && node .dist/test/build.mjs",
 		"test-unit": "node --experimental-test-coverage .dist/test/unit.mjs",
 		"eslint": "eslint ./scripts",
 		"prebuild": "tsc && npm run test && npm run prebuild-start",
@@ -88,7 +88,12 @@
 		"build-7z-arm": "npm run prebuild && electron-builder --arm64 --linux 7z && npm run postbuild",
 		"snapcraft": "npm run prebuild && cd dist/__snap-amd64/ && snapcraft && npm run postbuild",
 		"snapcraft-arm": "npm run prebuild && cd dist/__snap-arm64/ && snapcraft --target-arch=arm64 && npm run postbuild",
-		"postinstall": "electron-builder install-app-deps && node scripts/zstd-copy-native.js"
+		"postinstall": "electron-builder install-app-deps && node scripts/zstd-copy-native.js",
+		"sources-runtime": "node scripts/manga-sources/prepare-runtime.js",
+		"test-sources": "node --test scripts/test/manga-sources.cjs",
+		"test-sources-integration": "node scripts/test/manga-sources-integration.cjs",
+		"build-mac-sources": "npm run sources-runtime && npm run prebuild-start && npm run test-sources && electron-builder --mac dmg --config build/manga-sources-mac.js --publish never",
+		"test-sources-ui": "node scripts/test/manga-sources-ui.cjs"
 	},
 	"dependencies": {
 		"@awo00/smb2": "^1.1.1",
@@ -230,7 +235,8 @@
 			"templates/index.html",
 			"templates/about.html",
 			"templates/ebook.render.html",
-			"build/flatpak"
+			"build/flatpak",
+			"!build/runtime/**"
 		],
 		"asarUnpack": [
 			"node_modules/sharp",
@@ -396,6 +402,12 @@
 				"icon": "images/icons/associations/epub",
 				"role": "Viewer",
 				"mimeType": "application/epub+zip"
+			}
+		],
+		"extraResources": [
+			{
+				"from": "build/runtime/suwayomi/${platform}-${arch}",
+				"to": "suwayomi"
 			}
 		]
 	}

@@ -1,4 +1,4 @@
-type Page = boolean | 'languages' | 'theme' | 'settings';
+type Page = boolean | 'languages' | 'theme' | 'settings' | 'manga-sources';
 
 export type ReadingView = 'slide' | 'scroll' | 'panels' | 'rough-page-turn' | 'smooth-page-turn';
 export type PanelsType = 'focus' | 'hide' | 'immersive';

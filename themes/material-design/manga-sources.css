@@ -1,0 +1,38 @@
+.manga-sources { width: 100%; max-width: 1200px; box-sizing: border-box; }
+.manga-sources .ms-subtitle, .ms-tabs, .ms-status, .ms-error, .ms-content, .ms-footer { margin: 16px 24px; }
+.manga-sources .ms-tabs { display: flex; gap: 8px; flex-wrap: wrap; }
+.manga-sources button { font: inherit; color: inherit; cursor: pointer; border: 0; }
+.manga-sources .simple-button { float: none; margin: 0; padding: 10px 18px; background: var(--md-sys-color-surface-container-highest); border-radius: 24px; white-space: nowrap; }
+.manga-sources .simple-button.filled-tonal, .manga-sources .ms-tabs [aria-current="page"] { background: var(--md-sys-color-secondary-container); color: var(--md-sys-color-on-secondary-container); }
+.manga-sources .ms-tabs .simple-button { background: transparent; color: inherit; border: 1px solid var(--md-sys-color-outline-variant); }
+.manga-sources .ms-tabs .simple-button[aria-current="page"] { background: var(--md-sys-color-secondary-container); color: var(--md-sys-color-on-secondary-container); border-color: transparent; }
+.manga-sources button:hover { filter: brightness(1.12); }
+.manga-sources button:focus-visible, .manga-sources input:focus-visible, .manga-sources select:focus-visible { outline: 2px solid var(--md-sys-color-primary); outline-offset: 3px; }
+.manga-sources button:disabled { opacity: .45; cursor: default; }
+.manga-sources [hidden] { display: none !important; }
+.manga-sources .ms-toolbar { display: flex; gap: 12px; align-items: end; margin: 24px 0; flex-wrap: wrap; }
+.manga-sources .ms-toolbar h2 { padding: 0; margin: auto 0; }
+.manga-sources .ms-grow { flex: 1; min-width: 0; }
+.manga-sources label { display: flex; flex-direction: column; gap: 8px; }
+.manga-sources input, .manga-sources select { font: inherit; color: inherit; background: var(--md-sys-color-surface-container); border: 1px solid var(--md-sys-color-outline); border-radius: 8px; padding: 12px; min-width: 0; box-sizing: border-box; }
+.manga-sources .ms-row { display: flex; gap: 12px; align-items: center; padding: 16px 0; border-bottom: 1px solid var(--md-sys-color-outline-variant); }
+.manga-sources .ms-row p { margin: 6px 0 0; overflow-wrap: anywhere; }
+.manga-sources .ms-muted, .manga-sources .ms-footer { opacity: .7; }
+.manga-sources .ms-list-icon { padding: 8px; }
+.manga-sources .ms-empty { padding: 32px 0; text-align: center; opacity: .7; }
+.manga-sources .ms-status:empty { display: none; }
+.manga-sources .ms-error { color: var(--md-sys-color-error); overflow-wrap: anywhere; }
+.manga-sources .ms-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 24px 16px; }
+.manga-sources .ms-manga { text-align: left; background: transparent; padding: 0; }
+.manga-sources .ms-manga strong { display: block; margin-top: 10px; line-height: 1.4; }
+.manga-sources .ms-cover { aspect-ratio: 2 / 3; border-radius: 8px; overflow: hidden; background: var(--md-sys-color-surface-container-highest); position: relative; display: flex; align-items: center; justify-content: center; }
+.manga-sources .ms-cover span { font-size: 48px; opacity: .35; }
+.manga-sources .ms-cover img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.manga-sources .ms-cover img:not([src]) { display: none; }
+.manga-sources .ms-pagination { justify-content: center; align-items: center; }
+.manga-sources .ms-detail { display: grid; grid-template-columns: minmax(120px, 200px) 1fr; gap: 24px; margin: 24px 0; }
+.manga-sources .ms-detail h2 { padding: 0; margin: 0 0 16px; }
+.manga-sources .ms-description { white-space: pre-line; line-height: 1.6; }
+.manga-sources .ms-download { position: sticky; top: 0; background: var(--md-sys-color-surface); padding: 16px; z-index: 1; }
+.manga-sources progress { width: min(70%, 400px); accent-color: var(--md-sys-color-primary); margin-right: 16px; }
+@media (max-width: 650px) { .manga-sources .ms-detail { grid-template-columns: 100px 1fr; gap: 12px; } .manga-sources .ms-row { flex-wrap: wrap; } .manga-sources .ms-row .ms-grow { flex-basis: 60%; } }

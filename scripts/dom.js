@@ -2022,6 +2022,24 @@ function changeLanguage(lan)
 
 /* Page - Settings */
 
+function loadMangaSourcesPage(animation = true)
+{
+	if(onReading) reading.progress.save();
+	loadIndexContentLeft(animation, true);
+	indexPathControl(false, false, false, false, false, 'manga-sources');
+	selectMenuItem('manga-sources');
+	onReading = _onReading = false;
+	reading.hideContent();
+	reading.render.clean(true);
+	reading.music.destroy();
+	generateAppMenu();
+	shortcuts.register('browse');
+	floatingActionButton(false);
+	readingActive = false;
+	mangaSources.home();
+	tabs.update();
+}
+
 function loadSettingsPage(animation = true)
 {
 	loadIndexContentLeft(animation, true);
@@ -3262,6 +3280,7 @@ module.exports = {
 	loadRecentlyOpened: loadRecentlyOpened,
 	loadLanguagePage: loadLanguagePage,
 	loadSettingsPage: loadSettingsPage,
+	loadMangaSourcesPage: loadMangaSourcesPage,
 	loadThemePage: loadThemePage,
 	changeLanguage: changeLanguage,
 	selectMenuItem: selectMenuItem,

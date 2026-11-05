@@ -3,6 +3,7 @@ import {History} from '@types';
 /* eslint-disable @typescript-eslint/no-explicit-any */
 declare const reading: any;
 declare const settings: any;
+declare const mangaSources: any;
 
 function get(history: History): any
 {
@@ -22,6 +23,10 @@ function get(history: History): any
 
 				data = settings.getTabState();
 
+				break;
+
+			case 'manga-sources':
+				data = mangaSources.getTabState();
 				break;
 		}
 	}
@@ -68,6 +73,10 @@ function setFirst(history: History, data: any): void
 
 				settings.setTabStateFirst(data);
 
+				break;
+
+			case 'manga-sources':
+				mangaSources.setTabStateFirst(data);
 				break;
 		}
 	}
