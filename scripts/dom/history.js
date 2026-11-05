@@ -111,6 +111,11 @@ async function goTo(goTo = false, animation = true)
 
 function goBack()
 {
+	// Save while the history still identifies the chapter, including when Back
+	// is triggered by a shortcut instead of the reader's header button.
+	if(onReading && current?.isComic)
+		reading.progress.save();
+
 	template.setHeaderDelay();
 
 	const prev = history.pop();

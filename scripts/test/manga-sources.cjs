@@ -120,3 +120,36 @@ test('cache paths remain stable when the bundled engine restarts on a different 
 	const restarted = new SourceClient('http://127.0.0.1:54321', {cacheNamespace: 'bundled-suwayomi', fetchImpl: async() => { throw new Error('Offline'); }});
 	assert.equal(await restarted.downloadChapter(46, root), folder);
 });
+
+test('stale reading progress saves ignore non-string history paths', () => {
+	const vm = require('node:vm');
+	const source = require('node:fs').readFileSync(path.join(__dirname, '../reading/progress.js'), 'utf8');
+	const writes = [];
+	const context = vm.createContext({
+		module: {exports: {}}, onReading: true, p: path,
+		reading: {
+			isLoaded: () => true, hideMouseInFullscreen: () => {},
+			getImage: () => ({path: '/chapter/00002.png'}), currentPage: () => 2,
+			currentComics: () => ({}), isEbook: () => false, totalPages: () => 3,
+			doublePage: {active: () => false},
+		},
+		dom: {history: {mainPath: false, updateLastComic: () => {}}},
+		fileManager: {removePathPart: (file, root) => path.relative(path.normalize(root), file), splitPath: value => value.split(path.sep)},
+		relative: {path: value => value},
+		storage: {setKey: (...args) => writes.push(args)},
+	});
+	vm.runInContext(source, context);
+	context.module.exports.activeSave();
+	for(const mainPath of [false, undefined, null, '', 42])
+	{
+		context.dom.history.mainPath = mainPath;
+		assert.doesNotThrow(() => context.module.exports.save());
+	}
+	assert.doesNotThrow(() => context.module.exports.save('/chapter/001.png', true));
+	assert.deepEqual(writes, []);
+	context.dom.history.mainPath = '/chapter';
+	assert.equal(context.module.exports.save(), true);
+	assert.equal(writes.length, 1);
+	assert.equal(writes[0][1], '/chapter');
+	assert.equal(writes[0][2].index, 2);
+});

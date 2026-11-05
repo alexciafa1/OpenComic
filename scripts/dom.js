@@ -2024,7 +2024,7 @@ function changeLanguage(lan)
 
 function loadMangaSourcesPage(animation = true)
 {
-	if(onReading) reading.progress.save();
+	if(onReading && history.isComic) reading.progress.save();
 	loadIndexContentLeft(animation, true);
 	indexPathControl(false, false, false, false, false, 'manga-sources');
 	selectMenuItem('manga-sources');

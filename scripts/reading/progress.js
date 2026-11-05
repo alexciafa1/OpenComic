@@ -10,6 +10,12 @@ function save(path = false, mainPath = false, hasKnownChildren = false)
 	if(!saveIsActive)
 		return;
 
+	// Navigation can already have replaced the reading history with a root page
+	// when a pending save runs. Never normalize or store a non-path value.
+	const progressRoot = mainPath === false ? dom.history.mainPath : mainPath;
+	if(typeof progressRoot !== 'string' || !progressRoot)
+		return;
+
 	if(!path)
 	{
 		const image = reading.getImage(reading.currentPage());

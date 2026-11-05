@@ -150,7 +150,9 @@ async function readChapter(index)
 			// page layout, manga/webtoon mode, keyboard shortcuts and local progress.
 			recentlyOpened.set(folder);
 			dom.fromLibrary(false);
-			await dom.openComic(true, folder, folder);
+			const progress = relative.get('readingProgress')[folder];
+			const resumePath = typeof progress?.path === 'string' && p.dirname(progress.path) === folder && fs.existsSync(progress.path) ? progress.path : folder;
+			await dom.openComic(true, resumePath, folder);
 		}
 	}
 	catch(error)
